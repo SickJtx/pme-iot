@@ -1,0 +1,40 @@
+{
+    "project_info": {
+      "project_number": "765102291691",
+      "firebase_url": "https://acv-iot-default-rtdb.firebaseio.com",
+      "project_id": "acv-iot",
+      "storage_bucket": "acv-iot.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:765102291691:android:76ff6707b824af8d559cae",
+          "android_client_info": {
+            "package_name": "com.example.hemiplejia_pme"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "765102291691-khntthhoh16ai447rlgsse1k1mkv0c7j.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDtv7VkORx8rJv-d0P0AWNEKaPHO0BWPgc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "765102291691-khntthhoh16ai447rlgsse1k1mkv0c7j.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

@@ -1,20 +1,37 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../controllers/home_controller.dart';
+import '../../../../services/postionService.dart';
 
 class HomeView extends GetView<HomeController> {
+  void getPosition() async {}
+
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    FirebaseDatabase.instance
+        .ref('position')
+        .onValue
+        .listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+
+      controller.speed(double.tryParse(data.toString()));
+
+      print('data');
+      print(data);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proyecto PME'),
         centerTitle: true,
       ),
       body: Column(
+        //future: PositionService().listenPosition(),
         children: [
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
@@ -27,19 +44,27 @@ class HomeView extends GetView<HomeController> {
                   maximum: 180,
                   ranges: <GaugeRange>[
                     GaugeRange(
-                        startValue: 0, endValue: 60, color: Colors.green),
+                        startValue: 0,
+                        endValue: 60,
+                        color: Color.fromARGB(255, 60, 92, 135)),
                     GaugeRange(
-                        startValue: 60, endValue: 120, color: Colors.orange),
+                        startValue: 60,
+                        endValue: 120,
+                        color: Color.fromARGB(255, 60, 92, 135)),
                     GaugeRange(
-                        startValue: 120, endValue: 180, color: Colors.red)
+                        startValue: 120,
+                        endValue: 180,
+                        color: Color.fromARGB(255, 60, 92, 135))
                   ],
                   pointers: <GaugePointer>[
                     NeedlePointer(
                       value: controller.speed(),
                       enableDragging: true,
-                      onValueChanged: (newValue) {
-                        controller.speed(newValue.round() * 1.0);
+                      onValueChanged: (newValue) async {
+                        controller.speed(newValue.round().abs() * 1);
                         controller.speed.refresh();
+                        bool respuesta = await PositionService()
+                            .updatePosition(newValue.round().abs());
                       },
                     )
                   ],
@@ -61,7 +86,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
                 child: ElevatedButton(
